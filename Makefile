@@ -3,7 +3,7 @@ CC=${GPP}
 GPPFLAGS=-Wall 
 
 EXEC=airwatcher
-OBJ=main.o Sensor.o Attribute.o Measurement.o
+OBJ=main.o Sensor.o Attribute.o Measurement.o Controller.o
 
 ${EXEC}: ${OBJ}
 	${GPP} ${GPPFLAGS} -o ${EXEC} $^
