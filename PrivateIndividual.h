@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include "User.h"
+#include "Sensor.h"
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -44,6 +45,13 @@ public:
     void setPoints(int p);
 
     void setReliable(bool r);
+
+    list<Sensor*> getSensors() const;
+
+    int setSensors(list<Sensor*> s);
+
+    void addSensor(Sensor* s) ;
+
     
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -61,6 +69,7 @@ protected:
 
     int points;
     bool reliable;
+    list<Sensor*> sensors;
 };
 
 //-------------------------------- Autres définitions dépendantes de <PrivateIndividual>
