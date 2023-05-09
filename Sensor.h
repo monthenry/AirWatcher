@@ -29,6 +29,7 @@ class Sensor {
     
         list<Measurement*> getMeasurements();
         void setMeasurements(list<Measurement*> m);   
+        void addMeasurement(Measurement* m);
 
     private:
         string sensorID;

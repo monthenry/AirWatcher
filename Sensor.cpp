@@ -43,6 +43,11 @@ list<Measurement*> Sensor::getMeasurements(){
     return measurements;
 }
 
+void Sensor::addMeasurement(Measurement* m){
+    measurements.push_back(m);
+}
+
+
 
 void Sensor::setMeasurements(list<Measurement*> m){
     measurements=m;
