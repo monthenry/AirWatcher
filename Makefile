@@ -1,6 +1,6 @@
 GPP=g++
 CC=${GPP}
-GPPFLAGS=-Wall -Werror
+GPPFLAGS=-Wall 
 
 EXEC=airwatcher
 OBJ=main.o Sensor.o Attribute.o Measurement.o

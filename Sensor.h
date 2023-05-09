@@ -6,37 +6,45 @@ using namespace std;
 #include <string>
 #include <list>
 #include "Measurement.h"
-using namespace std;
+#include<iostream>
 
 class Measurement;
 class Sensor {
     public:
-        Sensor(string id, int lng, int lat, bool func);
+
         Sensor();
+        Sensor(string id, double lng, double lat, bool func);
 
         string getSensorId();
 
-        int getLongitude();
-        void setLongitude(int lng);
+        double getLongitude();
+        void setLongitude(double lng);
         
-        int getLatitude();
-        void setLatitude(int lat);
+        double getLatitude();
+        void setLatitude(double lat);
 
         bool getFunctionning();
         void setFunctionning(bool func);
 
     
         list<Measurement*> getMeasurements();
-        void setMeasurements(list<Measurement*> m);
-
-        
+        void setMeasurements(list<Measurement*> m);   
 
     private:
         string sensorID;
-        int latitude;
-        int longitude;
+        double latitude;
+        double longitude;
         bool functionning;
         list<Measurement*> measurements;
+
+        friend std::ostream& operator<<(std::ostream& os, const Sensor& sensor);
+
 };
+
+std::ostream& operator<<(std::ostream& os, const Sensor& sensor) {
+    os << sensor.sensorID << ", longitude=" << sensor.longitude << ", latitude=" << sensor.latitude <<" functionning : "<< sensor.functionning;
+    return os;
+}
+
 
 #endif

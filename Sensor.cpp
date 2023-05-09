@@ -1,8 +1,8 @@
 #include "Sensor.h"
     
-Sensor::Sensor(string id, int lat, int lng, bool func) {
+Sensor::Sensor(string id, double lat, double lng, bool func){
     sensorID = id;
-    lat = latitude;
+    latitude = lat;
     longitude = lng;
     functionning = func;
 }
@@ -15,18 +15,19 @@ string Sensor::getSensorId() {
     return sensorID;
 }
 
-int Sensor::getLongitude() {
+double Sensor::getLongitude() {
     return longitude;
 }
-void Sensor::setLongitude(int lng) {
+void Sensor::setLongitude(double lng) {
     longitude = lng;
 }
 
-int Sensor::getLatitude() {
+double Sensor::getLatitude() {
     return latitude;
 }
 
-void Sensor::setLatitude(int lat) {
+void Sensor::setLatitude(double lat) {
+
     latitude = lat;
 }
 
@@ -45,4 +46,9 @@ list<Measurement*> Sensor::getMeasurements(){
 
 void Sensor::setMeasurements(list<Measurement*> m){
     measurements=m;
+}
+
+ostream& operator<< (ostream &flux, Sensor  &sensor){
+    flux<<sensor.getSensorId()<<""<< sensor.getLatitude()<<";"<<sensor.getLatitude()<<""<<sensor.getFunctionning();
+    return flux;
 }
