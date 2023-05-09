@@ -1,19 +1,19 @@
 /*************************************************************************
-                           PrivateIndividual  -  description
+                           GovernmentAgent  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <PrivateIndividual> (fichier PrivateIndividual.cpp) ------------
+//---------- Réalisation de la classe <GovernmentAgent> (fichier GovernmentAgent.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "PrivateIndividual.h"
+#include "GovernmentAgent.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -21,51 +21,26 @@
 
 //----------------------------------------------------- Méthodes publiques
 
-int PrivateIndividual::getPoints() const
-{
-    return points;
-}
-
-bool PrivateIndividual::getReliable() const
-{
-    return reliable;
-}
-
-void PrivateIndividual::setPoints(int p)
-{
-    points = p;
-}
-
-void PrivateIndividual::setReliable(bool r)
-{
-    reliable = r;
-}
-
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-PrivateIndividual::PrivateIndividual ( string id,  string pwd, int p, int r )
-    : User ( id, pwd ), points(p), reliable(r)
-// Algorithme :
-// On initialise les villes de départ et d'arrivée via le constructeur père
-// On passe le pointeur de liste l à notre pointeur de liste membre.
+GovernmentAgent::GovernmentAgent ( string id,  string pwd )
+    : User ( id, pwd )
 {
     #ifdef MAP
-        cout << "Appel au constructeur de <PrivateIndividual>" << endl;
+        cout << "Appel au constructeur de <GovernmentAgent>" << endl;
     #endif
 
-} //----- Fin de PrivateIndividual
+} //----- Fin de GovernmentAgent
 
 
-PrivateIndividual::~PrivateIndividual ( )
-// Algorithme :
-// Libère l'espace mémoire sur lequel pointe listeUsers
+GovernmentAgent::~GovernmentAgent ( )
 {
     #ifdef MAP
-    cout << "Appel au destructeur de <PrivateIndividual>" << endl;
+    cout << "Appel au destructeur de <GovernmentAgent>" << endl;
     #endif
 
-} //----- Fin de ~PrivateIndividual
+} //----- Fin de ~GovernmentAgent
 
 
 //------------------------------------------------------------------ PRIVE

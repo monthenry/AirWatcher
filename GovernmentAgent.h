@@ -1,14 +1,14 @@
 /*************************************************************************
-                           PrivateIndividual  -  description
+                           GovernmentAgent  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <PrivateIndividual> (fichier PrivateIndividual.h) ----------------
-#if ! defined ( PrivateIndividual_H )
-#define PrivateIndividual_H
+//---------- Interface de la classe <GovernmentAgent> (fichier GovernmentAgent.h) ----------------
+#if ! defined ( GovernmentAgent_H )
+#define GovernmentAgent_H
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
@@ -20,32 +20,24 @@ using namespace std;
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <PrivateIndividual>
+// Rôle de la classe <GovernmentAgent>
 
 
 //------------------------------------------------------------------------
 
-class PrivateIndividual : public User
+class GovernmentAgent : public User
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    int getPoints() const;
-
-    int getReliable() const;
-
-    void setPoints(int p);
-
-    void setReliable(bool r);
-
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
-    PrivateIndividual ( string id,  string pwd, int p, int r );
+    GovernmentAgent ( string id,  string pwd );
 
-    virtual ~PrivateIndividual ( );
+    virtual ~GovernmentAgent ( );
 
 //------------------------------------------------------------------ PRIVE
 
@@ -54,10 +46,8 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 
-    int points;
-    bool reliable;
 };
 
-//-------------------------------- Autres définitions dépendantes de <PrivateIndividual>
+//-------------------------------- Autres définitions dépendantes de <GovernmentAgent>
 
-#endif // PrivateIndividual_H
+#endif // GovernmentAgent_H
