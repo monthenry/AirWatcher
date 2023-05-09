@@ -15,6 +15,7 @@
 //------------------------------------------------------ Include personnel
 #include "PrivateIndividual.h"
 
+
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -40,7 +41,18 @@ void PrivateIndividual::setReliable(bool r)
 {
     reliable = r;
 }
+list<Sensor*> PrivateIndividual::getSensors() const{
 
+    return sensors;
+}
+
+void PrivateIndividual::addSensor(Sensor* s) {
+    sensors.push_back(s);
+}
+
+int PrivateIndividual::setSensors(list<Sensor*> s){
+    sensors=s;
+}
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
