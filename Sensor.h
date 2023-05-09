@@ -38,14 +38,11 @@ class Sensor {
         bool functionning;
         list<Measurement*> measurements;
 
-        friend std::ostream& operator<<(std::ostream& os, const Sensor& sensor);
+        friend ostream& operator<<(ostream& os, const Sensor& sensor) {
+            os << sensor.sensorID << ", longitude=" << sensor.longitude << ", latitude=" << sensor.latitude <<" functionning : "<< sensor.functionning;
+            return os;
+        }
 
 };
-
-std::ostream& operator<<(std::ostream& os, const Sensor& sensor) {
-    os << sensor.sensorID << ", longitude=" << sensor.longitude << ", latitude=" << sensor.latitude <<" functionning : "<< sensor.functionning;
-    return os;
-}
-
 
 #endif

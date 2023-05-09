@@ -47,13 +47,7 @@ void Sensor::addMeasurement(Measurement* m){
     measurements.push_back(m);
 }
 
-
-
 void Sensor::setMeasurements(list<Measurement*> m){
     measurements=m;
 }
 
-ostream& operator<< (ostream &flux, Sensor  &sensor){
-    flux<<sensor.getSensorId()<<""<< sensor.getLatitude()<<";"<<sensor.getLatitude()<<""<<sensor.getFunctionning();
-    return flux;
-}
