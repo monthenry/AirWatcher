@@ -7,6 +7,10 @@ Sensor::Sensor(string id, int lat, int lng, bool func) {
     functionning = func;
 }
 
+Sensor::Sensor(){
+
+}
+
 string Sensor::getSensorId() {
     return sensorID;
 }
@@ -21,6 +25,7 @@ void Sensor::setLongitude(int lng) {
 int Sensor::getLatitude() {
     return latitude;
 }
+
 void Sensor::setLatitude(int lat) {
     latitude = lat;
 }
@@ -28,6 +33,16 @@ void Sensor::setLatitude(int lat) {
 bool Sensor::getFunctionning() {
     return functionning;
 }
+
 void Sensor::setFunctionning(bool func) {
     functionning = func;
+}
+
+list<Measurement*> Sensor::getMeasurements(){
+    return measurements;
+}
+
+
+void Sensor::setMeasurements(list<Measurement*> m){
+    measurements=m;
 }
