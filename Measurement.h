@@ -13,13 +13,18 @@ class Measurement {
     public: 
 
         Measurement(time_t t, float val, Attribute* att, Sensor* s);
+
         time_t getTime();
         float getValue();
         Attribute* getAttribute();
         Sensor* getSensor();
 
+        static bool initMeasurements(string filename);
 
-    private: 
+
+    private:
+        static Measurement* parseMeasurement(string line);
+
         float value ;
         time_t time ;
         Attribute* attribute;

@@ -5,8 +5,9 @@ using namespace std;
 
 #include <string>
 #include <list>
+#include <iostream>
+#include <sstream>
 #include "Measurement.h"
-#include<iostream>
 
 class Measurement;
 class Sensor {
@@ -26,6 +27,8 @@ class Sensor {
         bool getFunctionning();
         void setFunctionning(bool func);
 
+
+        Sensor* parseSensor(string s);
     
         list<Measurement*> getMeasurements();
         void setMeasurements(list<Measurement*> m);   

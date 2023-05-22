@@ -20,8 +20,8 @@ Sensor* Measurement::getSensor(){
 }
 
 Measurement::Measurement(time_t t, float val, Attribute* att, Sensor* s){
-    time=t;
-    value=val;
-    attribute=att;
-    sensor=s;
+    time = t;
+    value = val;
+    attribute = att;
+    sensor = s;
 }
