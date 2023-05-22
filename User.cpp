@@ -38,7 +38,6 @@ string User::getPassword ( ) const
 } //----- Fin de GetVilleArrivee
 
 User* User::parseUser(string ligne) {
-    cout<<ligne<<endl;
     istringstream istream(ligne);
     string id, pwd;
 
