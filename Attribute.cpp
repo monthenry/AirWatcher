@@ -1,9 +1,11 @@
 #include "Attribute.h"
-    
+
+map<string, Attribute*> Attribute::mapAttributes = {};
+
 Attribute::Attribute(string id, string u, string descr){
-    attributeId= id;
-    unit= u;
-    description=descr;
+    attributeId = id;
+    unit = u;
+    description = descr;
 
 }
 
