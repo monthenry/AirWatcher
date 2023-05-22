@@ -4,10 +4,14 @@
 using namespace std;
 
 #include <string>
+#include <fstream>
+#include <sstream>
 #include <list>
 #include <iostream>
 #include <sstream>
 #include "Measurement.h"
+#include <map>
+
 
 class Measurement;
 class Sensor {
@@ -26,20 +30,27 @@ class Sensor {
 
         bool getFunctionning();
         void setFunctionning(bool func);
+        static map<string, Sensor*> getSensorMap();
 
 
-        Sensor* parseSensor(string s);
+        
+        static bool initSensor(string filename);
     
         list<Measurement*> getMeasurements();
         void setMeasurements(list<Measurement*> m);   
         void addMeasurement(Measurement* m);
 
     private:
+        static Sensor* parseSensor(string s);
         string sensorID;
         double latitude;
         double longitude;
         bool functionning;
         list<Measurement*> measurements;
+        static map<string, Sensor*> mapSensor;
+
+        
+        
 
         friend ostream& operator<<(ostream& os, const Sensor& sensor) {
             os << sensor.sensorID << ", longitude=" << sensor.longitude << ", latitude=" << sensor.latitude <<" functionning : "<< sensor.functionning;
