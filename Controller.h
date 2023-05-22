@@ -12,14 +12,6 @@ class Controller {
         Controller();
 
         void initModel();
-
-    private:
-        // parsers
-        Measurement* parseMeasurement(string line);
-
-        // file readers
-        bool initMeasurements(string filename);
-        
 };
 
 #endif 
