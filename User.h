@@ -13,6 +13,9 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <map>
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -34,12 +37,16 @@ public:
 
     string getPassword ( ) const;
 
+    static User* parseUser(string ligne);
+
+    static bool initUsers(string filename);
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
 
 //-------------------------------------------- Constructeurs - destructeur
-
+    User ( );
     User ( string userID, string password );
     // Mode d'emploi :
     // Constructeur de la classe User
@@ -61,6 +68,12 @@ protected:
 //----------------------------------------------------- Attributs protégés
     string userID;
     string password;
+    static map<string, User*> mapUsers;
+
+    friend ostream& operator<<(ostream& os, const User& user) {
+        os << user.userID << ", password=" << user.password;
+        return os;
+    }
 };
 
 //-------------------------------- Autres définitions dépendantes de  User>
