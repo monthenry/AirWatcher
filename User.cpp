@@ -61,6 +61,12 @@ bool User::initUsers(string filename) {
 
     return done;
 }
+
+map<string, User*> User::getMapUsers(){
+    return mapUsers;
+}
+
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur

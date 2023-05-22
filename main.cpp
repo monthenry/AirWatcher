@@ -10,7 +10,6 @@ using namespace std;
 Sensor* parseSensor(string s);
 
 int main(int argc, char* argv[]) {
-    bool c = User::initUsers("./data/users.csv");
-    cout << c << endl;
+    
     return 0;
 }

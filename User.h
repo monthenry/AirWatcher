@@ -41,6 +41,8 @@ public:
 
     static bool initUsers(string filename);
 
+    static map<string, User*> getMapUsers();
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
