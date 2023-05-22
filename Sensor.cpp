@@ -51,3 +51,25 @@ void Sensor::setMeasurements(list<Measurement*> m){
     measurements=m;
 }
 
+
+Sensor* Sensor::parseSensor(string line){
+    istringstream istream (line);
+    string champ;
+
+    getline(istream,champ,';');
+    string id = champ;
+    cout<<id<<endl;
+
+    getline(istream,champ,';');
+    double longitude = stod(champ);
+    cout<<longitude<<endl;
+
+    
+    getline(istream,champ,';');
+    double lat=stod(champ);
+    cout<<lat<<endl;
+
+
+    Sensor *s = new Sensor(id, lat,longitude, true);
+    return s;
+}
