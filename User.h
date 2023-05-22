@@ -30,9 +30,9 @@ class User
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    String getUserID (  ) const;
+    string getUserID (  ) const;
 
-    String getPassword ( ) const;
+    string getPassword ( ) const;
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -40,7 +40,7 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    User ( String userID, String password );
+    User ( string userID, string password );
     // Mode d'emploi :
     // Constructeur de la classe User
     // Contrat : 
@@ -59,8 +59,8 @@ protected:
 
 
 //----------------------------------------------------- Attributs protégés
-    String userID;
-    String password;
+    string userID;
+    string password;
 };
 
 //-------------------------------- Autres définitions dépendantes de  User>

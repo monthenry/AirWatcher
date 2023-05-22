@@ -20,14 +20,14 @@
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-char* Trajet::getUserID ( ) const
+Trajet::getUserID ( ) const
 // Algorithme :
 // Retourne l'id d'utilisateur.
 {
     return userID;
 } //----- Fin de GetVilleDepart
 
-String User::getPassword ( ) const
+User::getPassword ( ) const
 // Algorithme :
 // Retourne le mot de passe.
 {
@@ -38,7 +38,7 @@ String User::getPassword ( ) const
 
 //-------------------------------------------- Constructeurs - destructeur
 
-User::User ( String id, String pwd )
+User::User ( string id, string pwd )
 {
     #ifdef MAP
         cout << "Appel au constructeur de <User>" << endl;
