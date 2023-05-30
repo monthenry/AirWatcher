@@ -5,21 +5,30 @@
 #include <string>
 #include <list>
 
+using namespace std; 
+
 class View {
 public:
-    static void displayMenu();
-    static int getUserChoice() ;
-    static void createAccount();
-    static bool login();
-    static void displayActionsMenu();
-   
+    static int getUserChoice();
+    static void displayNotImplementedError();
+    static void displayLogoutMessage();
+    static void displayConnexionMenu();
+    static void displayAccountCreationMenu();
+    static bool displayLoginMenu();
+    static void displayActionMenu();
+
+    static list<std::string>* requestAreaStatistics();
+    static void displayAreaStatistics();
+
+    static string requestSensorRanking();
+    static void displaySensorRanking();
+
+    // ------------Not implemented----------------
     static void manageUsers();
     static void manageSensors();
     static void retrieveAccountInformation();
     static void requestSensorDataAnalysis();
-    static std::list<std::string>* requestGlobalStatistics();
     static void requestAirQualityAtLocation();
-    static string requestSensorRanking();
     static void requestCleanerStatistics();
     static void togglePerformanceMetrics();
 };

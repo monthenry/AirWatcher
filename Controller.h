@@ -1,17 +1,27 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#if ! defined ( Controller_H )
+#define Controller_H
+
+#include <ctime> 
+#include <iostream>
+#include <utility>
+#include <string>
+
+#include "Attribute.h"
+#include "Sensor.h"
+#include "Measurement.h"
+#include "User.h"
+#include "PrivateIndividual.h"
+#include "View.h"
 
 using namespace std;
 
-#include "Measurement.h"
-#include "Attribute.h"
-
 class Controller {
-
-    public:
+    public: 
         Controller();
+        void initController();
 
+    private:
         void initModel();
+        list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
 };
-
-#endif 
+#endif
