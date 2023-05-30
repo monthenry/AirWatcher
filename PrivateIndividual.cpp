@@ -1,17 +1,3 @@
-/*************************************************************************
-                           PrivateIndividual  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
-*************************************************************************/
-
-//---------- Réalisation de la classe <PrivateIndividual> (fichier PrivateIndividual.cpp) ------------
-
-//---------------------------------------------------------------- INCLUDE
-
-//-------------------------------------------------------- Include système
-
 //------------------------------------------------------ Include personnel
 #include "PrivateIndividual.h"
 

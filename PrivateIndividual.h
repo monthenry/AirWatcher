@@ -1,12 +1,3 @@
-/*************************************************************************
-                           PrivateIndividual  -  description
-                             -------------------
-    début                : $DATE$
-    copyright            : (C) $YEAR$ par $AUTHOR$
-    e-mail               : $EMAIL$
-*************************************************************************/
-
-//---------- Interface de la classe <PrivateIndividual> (fichier PrivateIndividual.h) ----------------
 #if ! defined ( PrivateIndividual_H )
 #define PrivateIndividual_H
 
@@ -16,13 +7,6 @@
 #include "User.h"
 #include "Sensor.h"
 using namespace std;
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-
-//------------------------------------------------------------------------
-// Rôle de la classe <PrivateIndividual>
-
 
 //------------------------------------------------------------------------
 
@@ -35,7 +19,7 @@ public:
 
     int getPoints() const;
 
-    int getReliable() const;
+    bool getReliable() const;
 
     void setPoints(int p);
 
@@ -47,8 +31,6 @@ public:
 
     void addSensor(Sensor* s) ;
 
-//------------------------------------------------- Surcharge d'opérateurs
-
 //-------------------------------------------- Constructeurs - destructeur
     PrivateIndividual ( string id,  string pwd, int p, int r );
 
@@ -57,15 +39,11 @@ public:
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
-
 //----------------------------------------------------- Attributs protégés
 
     int points;
     bool reliable;
     list<Sensor*> sensors;
 };
-
-//-------------------------------- Autres définitions dépendantes de <PrivateIndividual>
 
 #endif // PrivateIndividual_H
