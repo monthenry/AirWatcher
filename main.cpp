@@ -30,7 +30,7 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
     map<string, tuple<int,int,int> > mapMean;
     int cptO3=0,cptNO2=0,cptSO2=0, cptPM10=0;
     int sumO3=0,sumNO2=0,sumSO2=0,sumPM10=0;
-    int minO3=INT8_MAX,minSO2=INT8_MAX,minNO2=INT8_MAX,minPM10=INT8_MAX;
+    int minO3=INT32_MAX,minSO2=INT32_MAX,minNO2=INT32_MAX,minPM10=INT32_MAX;
     int maxO3=0, maxSO2=0,maxNO2=0,maxPM10=0;
 
 
@@ -48,7 +48,7 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
                             maxO3=(*innerIt)->getValue();
                         }
                         if((*innerIt)->getValue()<minO3){
-                            maxO3=(*innerIt)->getValue();
+                            minO3=(*innerIt)->getValue();
                         }
                         cptO3++;
                         sumO3+=(*innerIt)->getValue();
@@ -68,7 +68,7 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
                             maxSO2=(*innerIt)->getValue();
                         }
                         if((*innerIt)->getValue()<minSO2){
-                            maxSO2=(*innerIt)->getValue();
+                            minSO2=(*innerIt)->getValue();
                         }
                         cptSO2++;
                         sumSO2+=(*innerIt)->getValue();

@@ -52,7 +52,6 @@ Measurement* Measurement::parseMeasurement(string line) {
 bool Measurement::initMeasurements(string filename) {
     ifstream fichier(filename);
     bool done = fichier.good();
-    cout<<done;
     string ligne;
 
     if (done) {
