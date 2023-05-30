@@ -41,16 +41,12 @@ public:
 
     void setReliable(bool r);
 
-<<<<<<< HEAD
-=======
     list<Sensor*> getSensors() const;
 
     int setSensors(list<Sensor*> s);
 
     void addSensor(Sensor* s) ;
 
-
->>>>>>> fd67540a928c18c48b4d678cde6aefea0546794c
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
