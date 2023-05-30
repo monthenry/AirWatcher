@@ -95,6 +95,10 @@ int Sensor::getAtmoIndex(time_t start, time_t end) {
     int sumO3=0, sumNO2=0, sumSO2=0, sumPM10=0;
 
     for (list<Measurement*>::iterator it = measurements.begin(); it != measurements.end(); ++it) {
+        if ((*it)->getTime() < start || (*it)->getTime() > end) {
+            continue;
+        }
+
         if((*it)->getAttribute()->getAttributeId()=="O3"){
             cptO3++;
             sumO3+=(*it)->getValue();
