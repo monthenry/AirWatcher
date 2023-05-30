@@ -32,8 +32,6 @@ class Sensor {
         void setFunctionning(bool func);
         static map<string, Sensor*> getSensorMap();
 
-
-        
         static bool initSensor(string filename);
     
         list<Measurement*> getMeasurements();
@@ -48,9 +46,6 @@ class Sensor {
         bool functionning;
         list<Measurement*> measurements;
         static map<string, Sensor*> mapSensor;
-
-        
-        
 
         friend ostream& operator<<(ostream& os, const Sensor& sensor) {
             os << sensor.sensorID << ", longitude=" << sensor.longitude << ", latitude=" << sensor.latitude <<" functionning : "<< sensor.functionning;

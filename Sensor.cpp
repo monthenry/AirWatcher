@@ -77,15 +77,12 @@ map<string, Sensor*> Sensor::getSensorMap(){
 bool Sensor::initSensor(string filename) {
     ifstream fichier(filename);
     bool done = fichier.good();
-    cout<<done;
     string ligne;
 
     if (done) {
         while (getline(fichier, ligne)) {
                 
-
             Sensor* sens = parseSensor(ligne);
-            cout<<*sens<<endl;
             mapSensor.insert(pair<string, Sensor*>(sens->getSensorId(), sens));
         }
     }
