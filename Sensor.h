@@ -38,6 +38,8 @@ class Sensor {
         void setMeasurements(list<Measurement*> m);   
         void addMeasurement(Measurement* m);
 
+        int getAtmoIndex(time_t start, time_t end);
+
     private:
         static Sensor* parseSensor(string s);
         string sensorID;
