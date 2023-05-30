@@ -31,7 +31,7 @@ class Measurement {
         Sensor* sensor;
 
         friend ostream& operator<<(ostream& os, const Measurement& msrm) {
-            os << "Mesure du " << msrm.sensor->getSensorId() << " : " <<  msrm.value << " " << msrm.attribute->getAttributeId() << " à " << msrm.time;
+            os << "Mesure : << " <<  msrm.value << " " << msrm.attribute->getAttributeId() << " à " << msrm.time;
             return os;
         }
 };
