@@ -7,6 +7,7 @@
 #include "Controller.h"
 #include "User.h"
 #include <ctime>
+#include <math.h> 
 using namespace std;
 
 Sensor* parseSensor(string s);
@@ -17,7 +18,7 @@ int main(int argc, char* argv[]) {
     c.initModel();
     map<string,tuple<int, int, int> > mapMean =statMean(44,0,5,0,time(nullptr));
     for ( map < string, tuple<int,int,int> >::iterator it = mapMean.begin ( ) ; it != mapMean.end ( ) ; ++it ){
-        cout<<it->first<<" "<<it->second<<endl;
+        cout << it->first << " : mean = " << get<0>(it->second) <<  "; max=" << get<1>(it->second) << "; min=" << get<2>(it->second) << endl;
     }
     return 0;
 }
@@ -29,7 +30,7 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
     map<string, tuple<int,int,int> > mapMean;
     int cptO3=0,cptNO2=0,cptSO2=0, cptPM10=0;
     int sumO3=0,sumNO2=0,sumSO2=0,sumPM10=0;
-    int minO3=INT_MAX,minSO2=INT_MAX,minNO2=INT_MAX,minPM10=INT_MAX;
+    int minO3=INT8_MAX,minSO2=INT8_MAX,minNO2=INT8_MAX,minPM10=INT8_MAX;
     int maxO3=0, maxSO2=0,maxNO2=0,maxPM10=0;
 
 
@@ -57,7 +58,7 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
                             maxNO2=(*innerIt)->getValue();
                         }
                         if((*innerIt)->getValue()<minNO2){
-                            maxNO2=(*innerIt)->getValue();
+                            minNO2=(*innerIt)->getValue();
                         }
                         cptNO2++;
                         sumNO2+=(*innerIt)->getValue();
@@ -95,9 +96,9 @@ map<string,tuple<int, int, int> > statMean(int x, int y,int d, time_t debut, tim
     // mapMean.insert(pair<string,tuple<int,int,int> >("PM10",tuple<int,int,int>((sumPM10/cptPM10),maxPM10,minPM10)));
 
     mapMean.insert(pair<string, tuple<int, int, int> >("O3", make_tuple((sumO3 / cptO3), maxO3, minO3)));
-    mapMean.insert(pair<string, tuple<int, int, int> >("O3", make_tuple((sumNO2 / cptNO2), maxNO2, minNO2)));
-    mapMean.insert(pair<string, tuple<int, int, int> >("O3", make_tuple((sumSO2 / cptSO2), maxSO2, minSO2)));
-    mapMean.insert(pair<string, tuple<int, int, int> >("O3", make_tuple((sumPM10 / cptPM10), maxPM10, minPM10)));
+    mapMean.insert(pair<string, tuple<int, int, int> >("NO2", make_tuple((sumNO2 / cptNO2), maxNO2, minNO2)));
+    mapMean.insert(pair<string, tuple<int, int, int> >("SO2", make_tuple((sumSO2 / cptSO2), maxSO2, minSO2)));
+    mapMean.insert(pair<string, tuple<int, int, int> >("PM10", make_tuple((sumPM10 / cptPM10), maxPM10, minPM10)));
     
     return mapMean;
 } 
