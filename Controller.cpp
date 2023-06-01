@@ -67,7 +67,7 @@ void Controller::initController() {
                 /* Request for global statistics in an area */
                 list<string>* userRequest = View::requestAreaStatistics();
                 break;
-		}
+    		}
             case 6:
                 /* Request for air quality at a precise location (not implemented)*/
                 break;
@@ -115,12 +115,6 @@ list<pair<string, int>>* Controller::getSensorRanking(Sensor mySensor, time_t st
                 rankedSensors->insert(it2, newSensor);
                 break;
             }
-        }
-    }
-
-    for(auto it = rankedSensors->begin(); it != rankedSensors->end(); ++it) {
-        if(it->first != "") {
-            cout <<  "Sensor ID : " << it->first << ", Atmo value : " << it->second << endl;
         }
     }
 
