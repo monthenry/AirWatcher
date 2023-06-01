@@ -63,11 +63,11 @@ void Controller::initController() {
                 /* Request sensor data analysis (not implemented)*/
                 break;
 
-            case 5:
+            case 5:{
                 /* Request for global statistics in an area */
                 list<string>* userRequest = View::requestAreaStatistics();
                 break;
-
+		}
             case 6:
                 /* Request for air quality at a precise location (not implemented)*/
                 break;
