@@ -20,7 +20,7 @@ class Controller {
         Controller();
         void initController();
 
-    private:
+    public:
         void initModel();
         list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
 };
