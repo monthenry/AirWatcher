@@ -69,43 +69,9 @@ void View::displayActionMenu() {
     cout << "9. Toggle performance metrics" << endl;
 }
 
-void View::manageUsers() {
-    cout << "Manage users:" << endl;
-    cout << "To manage users, please enter the corresponding number to the action you want to perform and press Enter:" << endl;
-    cout << "1. Add a user" << endl;
-    cout << "2. Edit a user" << endl;
-    cout << "3. Delete a user" << endl;
-    cout << endl;
-    
-    int action;
-    cout << "Please enter your choice: ";
-    cin >> action;
-    cin.ignore(); // Ignore the newline character in the input buffer
-
-    // Perform the chosen action
-    switch (action) {
-        case 1:
-            // Add a user logic
-            cout << "Adding a user..." << endl;
-            break;
-        case 2:
-            // Edit a user logic
-            cout << "Editing a user..." << endl;
-            break;
-        case 3:
-            // Delete a user logic
-            cout << "Deleting a user..." << endl;
-            break;
-        default:
-            cout << "Invalid choice. Please try again." << endl;
-    }
-}
-
-list<string>* View::requestAreaStatistics() {
+list<string>* View::requestGlobalStatistics() {
     list<string>* params = new list<string>();
-
-    cout << "To request for global statistics in an area, enter '5' and press Enter," << endl;
-    cout << "then provide the location, radius, and period of interest." << endl;
+    cout << "To request for global statistics in an area provide the location, radius, and period of interest." << endl;
 
     cout << "Latitude: ";
     string latitude;
@@ -122,125 +88,46 @@ list<string>* View::requestAreaStatistics() {
     getline(cin, radius);
     params->push_back(radius);
 
-    cout << "Period: ";
-    string period;
-    getline(cin, period);
-    params->push_back(period);
+    cout << "Begining date with hour minute and second (dd/MM/YYYY HH:mm:ss)";
+    string begin;
+    getline(cin, begin);
+    params->push_back(begin);
+
+    cout << "Finishing date with hour minute and second (dd/MM/YYYY HH:mm:ss) ";
+    string finish;
+    getline(cin, finish);
+    params->push_back(finish);
+
     return params;
 }
 
-void View::displayAreaStatistics() {
-    // DISPLAY AREA STATISTICS HERE
-}
-/*
-string requestSensorRanking() {
-    cout << "Request sensors ranking in similarity to a specific sensor:" << endl;
-    // Prompt the user for sensor ID
+list<string>* View::requestSensorRanking() {
+    list<string>* params = new list<string>();
+
+    cout << "Request sensors ranking in similarity to a specific sensor:";
     string sensorID;
-    cout << "Enter sensor ID: ";
-    cin >> sensorID;
-    cout << endl;
-    return sensorID;
-}
-*/
+    getline(cin, sensorID);
+    params->push_back(sensorID);
 
-void displaySensorRanking() {
-    // DISPLAY SENSOR RANKING HERE
-}
+    cout << "Begining date with hour minute and second (dd/MM/YYYY HH:mm:ss)";
+    string begin;
+    getline(cin, begin);
+    params->push_back(begin);
 
-// --------------Not implemented--------------------
-
-void manageSensors() {
-    cout << "Manage sensors:" << endl;
-    cout << "To manage sensors, please enter the corresponding number to the action you want to perform and press Enter:" << endl;
-    cout << "1. Add a sensor" << endl;
-    cout << "2. Edit a sensor" << endl;
-    cout << "3. Delete a sensor" << endl;
-    cout << endl;
+    cout << "Finishing date with hour minute and second (dd/MM/YYYY HH:mm:ss) ";
+    string finish;
+    getline(cin, finish);
+    params->push_back(finish);
     
-    int action;
-    cout << "Please enter your choice: ";
-    cin >> action;
-    cin.ignore(); // Ignore the newline character in the input buffer
+    return params;
+}
 
-    // Perform the chosen action
-    switch (action) {
-        case 1:
-            // Add a sensor logic
-            cout << "Adding a sensor..." << endl;
-            break;
-        case 2:
-            cout << "Editing a sensor..." << endl;
-            break;
-        case 3:
-            cout << "Deleting a sensor..." << endl;
-            break;
-        default:
-            cout << "Invalid choice. Please try again." << endl;
+void View::displayStats(std::map<std::string, std::tuple<int, int, int>>* mapMean) {
+    for (std::map<std::string, std::tuple<int, int, int>>::iterator it = mapMean->begin(); it != mapMean->end(); ++it) {
+        std::cout << it->first << " : mean = " << std::get<0>(it->second) << "; max = " << std::get<1>(it->second) << "; min = " << std::get<2>(it->second) << std::endl;
     }
 }
-void View::retrieveAccountInformation() {
-    cout << "Retrieve account information:" << endl;
-    // Logic to retrieve and display account information
-    cout << "Your username is: johndoe" << endl;
-    cout << "Your user privilege: private user" << endl;
-    cout << "Your number of points: 5" << endl;
-    cout << endl;
+
+void View::displaySensorRanking() {
+    // DISPLAY SENSOR RANKING HERE
 }
-
-void View::requestSensorDataAnalysis() {
-    cout << "Request sensor's data analysis:" << endl;
-    cout << "sensor ID: 12345" << endl;
-    // Logic to perform sensor data analysis
-    cout << "Performing sensor data analysis..." << endl;
-    cout << endl;
-}
-
-
-void View::requestAirQualityAtLocation() {
-    cout << "Request for air quality at a precise location:" << endl;
-    // Prompt the user for location
-    string latitude, longitude;
-    cout << "latitude: ";
-    cin >> latitude;
-    cout << "longitude: ";
-    cin >> longitude;
-    cout << endl;
-    // Logic to retrieve and display air quality at the specified location
-    cout << "Retrieving air quality at location..." << endl;
-    cout << endl;
-}
-
-string requestSensorRanking() {
-    cout << "Request sensors ranking in similarity to a specific sensor:" << endl;
-    // Prompt the user for sensor ID
-    string sensorID;
-    cout << "Enter sensor ID: ";
-    cin >> sensorID;
-    cout << endl;
-    // Logic to retrieve and display sensor ranking
-    cout << "Retrieving sensor ranking..." << endl;
-    cout << endl;
-    return sensorID;
-}
-
-void requestCleanerStatistics() {
-    cout << "Request statistics for a cleaner:" << endl;
-    // Prompt the user for cleaner ID
-    string cleanerID;
-    cout << "cleaner ID: ";
-    cin >> cleanerID;
-    cout << endl;
-    // Logic to retrieve and display cleaner statistics
-    cout << "Retrieving cleaner statistics..." << endl;
-    cout << endl;
-}
-
-void togglePerformanceMetrics() {
-    cout << "Toggle performance metrics:" << endl;
-    // Logic to toggle performance metrics
-
-    cout << "Toggling performance metrics activated" << endl;
-    cout << endl;
-}
-

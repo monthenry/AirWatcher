@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <map>
 
 using namespace std; 
 
@@ -20,17 +21,11 @@ public:
     static list<std::string>* requestAreaStatistics();
     static void displayAreaStatistics();
 
-    static string requestSensorRanking();
-    static void displaySensorRanking();
+    static list<string>* requestSensorRanking();
+    static list<string>* requestGlobalStatistics();
 
-    // ------------Not implemented----------------
-    static void manageUsers();
-    static void manageSensors();
-    static void retrieveAccountInformation();
-    static void requestSensorDataAnalysis();
-    static void requestAirQualityAtLocation();
-    static void requestCleanerStatistics();
-    static void togglePerformanceMetrics();
+    static void displayStats(std::map<std::string, std::tuple<int, int, int>>* mapMean);
+    static void displaySensorRanking();
 };
 
 #endif  // VIEW_H

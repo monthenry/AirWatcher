@@ -1,28 +1,40 @@
 #if ! defined ( Controller_H )
 #define Controller_H
 
-#include <ctime> 
-#include <iostream>
-#include <utility>
 #include <string>
-#include <cstdlib>
+#include <tuple>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <chrono>
+#include <functional>
+#include <ctime>
+#include <math.h>
 
 #include "Attribute.h"
 #include "Sensor.h"
 #include "Measurement.h"
+#include "View.h"
+#include "Sensor.h"
 #include "User.h"
 #include "PrivateIndividual.h"
-#include "View.h"
 
 using namespace std;
 
 class Controller {
     public: 
         Controller();
-        void initController();
 
-    public:
+        void initController();
         void initModel();
+        Sensor* parseSensor(string s);
+        map<string,tuple<int,int,int> > statMean(int x, int y,int d, time_t debut, time_t fin);
         list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
+        time_t convertDateTimeToTimeT(const std::string& dateTimeString);
+
+        void Scenario3(list<string>* data);
+        void Test1_Scenario3();
+        void Test2_Scenario3();
 };
 #endif
