@@ -5,6 +5,7 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include <cstdlib>
 
 #include "Attribute.h"
 #include "Sensor.h"

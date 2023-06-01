@@ -67,7 +67,7 @@ void Controller::initController() {
                 /* Request for global statistics in an area */
                 list<string>* userRequest = View::requestAreaStatistics();
                 break;
-		}
+    		}
             case 6:
                 /* Request for air quality at a precise location (not implemented)*/
                 break;
@@ -99,8 +99,24 @@ list<pair<string, int>>* Controller::getSensorRanking(Sensor mySensor, time_t st
 
     // Looping through the sensor map
     map<string, Sensor*> sensors = Sensor::getSensorMap();
+    list<pair<string, int>>* rankedSensors = new list<pair<string, int>>(sensors.size());
+    int value;
+
     for (auto it = sensors.begin(); it != sensors.end(); ++it) {
         Sensor theSensor = *(it->second);
-        int value = mySensorAtmo - theSensor.getAtmoIndex(startTime, endTime);
+        int theSensorAtmo = theSensor.getAtmoIndex(startTime, endTime);
+        value = abs(mySensorAtmo - theSensorAtmo);
+        for (auto it2 = rankedSensors->begin(); it2 != rankedSensors->end(); ++it2) {
+            int currentSensorAtmo = it2->second;
+            if(abs(mySensorAtmo-currentSensorAtmo) > value){
+                pair<string, int> newSensor;
+                newSensor.first = theSensor.getSensorId();
+                newSensor.second = theSensorAtmo;
+                rankedSensors->insert(it2, newSensor);
+                break;
+            }
+        }
     }
+
+    return rankedSensors;
 }
