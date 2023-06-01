@@ -16,10 +16,18 @@ map<string,tuple<int,int,int> > statMean(int x, int y,int d, time_t debut, time_
 int main(int argc, char* argv[]) {
     Controller c;
     c.initModel();
+
+    /*
     map<string,tuple<int, int, int> > mapMean =statMean(44,0,5,0,time(nullptr));
     for ( map < string, tuple<int,int,int> >::iterator it = mapMean.begin ( ) ; it != mapMean.end ( ) ; ++it ){
         cout << it->first << " : mean = " << get<0>(it->second) <<  "; max=" << get<1>(it->second) << "; min=" << get<2>(it->second) << endl;
-    }
+    } */
+
+    map<string, Sensor*> sensors = Sensor::getSensorMap();
+    Sensor test = *(sensors.begin()->second);
+    time_t start = 0;
+    time_t end = 9685637245;
+    c.getSensorRanking(test, start, end);
     return 0;
 }
 
