@@ -24,8 +24,8 @@ public:
     static list<string>* requestSensorRanking();
     static list<string>* requestGlobalStatistics();
 
-    static void displayStats(std::map<std::string, std::tuple<int, int, int>>* mapMean);
-    static void displaySensorRanking();
+    static void displayStats(map<string, tuple<int, int, int>>* mapMean);
+    static void displaySensorRanking(string sensorID, int atmoIndex, list<pair<string, int>>* sensorRanked);
 };
 
 #endif  // VIEW_H

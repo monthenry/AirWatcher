@@ -59,7 +59,6 @@ void Controller::initController() {
                 Test2_Scenario3();
                 
                 list<string>* data = View::requestGlobalStatistics();
-
                 Scenario3(data);
                 break;
     		}
@@ -67,12 +66,23 @@ void Controller::initController() {
             case 7: {
                 /* Request for sensor ranking in similarity to a specified sensor */
                 list<string>* userInput = View::requestSensorRanking();
+
+                auto it = userInput->begin();
+
+                string sensorID = *it;
                 map<string, Sensor*> sensors = Sensor::getSensorMap();
-                // cout << sensors.find(0) << endl;
-                // Sensor sensorToRank = NULL;
-                // time_t start = convertDateTimeToTimeT(userInput[1]);
-                // time_t end = convertDateTimeToTimeT(userInput[2]);
-                // list<pair<string, int>>* rankedSensors = getSensorRanking(sensorToRank, start, end);
+                Sensor targetSensor = *(sensors[sensorID]);
+
+                advance(it, 1);
+                string startDate = *it;
+                time_t start = convertDateTimeToTimeT(startDate);
+
+                advance(it, 1);
+                string endDate = *it;
+                time_t end = convertDateTimeToTimeT(endDate);
+                
+                list<pair<string, int>>* rankedSensors = getSensorRanking(targetSensor, start, end);
+                View::displaySensorRanking(sensorID, targetSensor.getAtmoIndex(start, end), rankedSensors);
                 break;
             }
             
@@ -114,24 +124,24 @@ list<pair<string, int>>* Controller::getSensorRanking(Sensor mySensor, time_t st
     return rankedSensors;
 }
 
-time_t Controller::convertDateTimeToTimeT(const std::string& dateTimeString) {
-    std::tm timeStruct = {};
-    std::istringstream ss(dateTimeString);
-    ss >> std::get_time(&timeStruct, "%d/%m/%Y %H:%M:%S");
+time_t Controller::convertDateTimeToTimeT(const string& dateTimeString) {
+    tm timeStruct = {};
+    istringstream ss(dateTimeString);
+    ss >> get_time(&timeStruct, "%d/%m/%Y %H:%M:%S");
     if (ss.fail()) {
-        std::cerr << "Error parsing date and time." << std::endl;
+        cerr << "Error parsing date and time." << endl;
         return 0; // Return 0 to indicate an error
     }
 
-    std::time_t timeT = std::mktime(&timeStruct);
+    time_t timeT = mktime(&timeStruct);
     if (timeT == -1) {
-        std::cerr << "Error converting date and time to time_t." << std::endl;
+        cerr << "Error converting date and time to time_t." << endl;
         return 0; // Return 0 to indicate an error
     }
     return timeT;   
 }
 
-map<string,tuple<int, int, int> > Controller::statMean(int x, int y,int d, time_t debut, time_t fin){
+map<string,tuple<int, int, int> > Controller::statMean(int x, int y, int d, time_t debut, time_t fin){
     map<string, Sensor*> sensorMap = Sensor::getSensorMap();
     map<string, tuple<int,int,int> > mapMean;
     int cptO3=0,cptNO2=0,cptSO2=0, cptPM10=0;
@@ -198,7 +208,7 @@ map<string,tuple<int, int, int> > Controller::statMean(int x, int y,int d, time_
 
 
     if(compteur==0){
-        std::cerr<<"Error: There is no sensor data corresponding to your demand"<<std::endl;
+        cerr<<"Error: There is no sensor data corresponding to your demand"<<endl;
 
     }else{
         mapMean.insert(pair<string, tuple<int, int, int> >("O3", make_tuple((sumO3 / cptO3), maxO3, minO3)));
@@ -215,40 +225,40 @@ void Controller::Scenario3(list<string>* data){
     map<string,tuple<int, int, int> > mapMean;
     if (!data->empty()&& data->size() >= 5) {
         try {
-            std::list<std::string>::iterator it = data->begin();
-            int lat = std::stoi(*it);
-            std::advance(it, 1);
-            int longitude = std::stoi(*it);
-            std::advance(it, 1);
-            int radius = std::stoi(*it) ;
-            std::advance(it, 1);
+            list<string>::iterator it = data->begin();
+            int lat = stoi(*it);
+            advance(it, 1);
+            int longitude = stoi(*it);
+            advance(it, 1);
+            int radius = stoi(*it) ;
+            advance(it, 1);
             time_t timeD = convertDateTimeToTimeT(*it);
-            std::advance(it, 1);
+            advance(it, 1);
             time_t timeF = convertDateTimeToTimeT(*it);
 
             if(timeD>= timeF){
-                std::cerr << "Error: Beginning time is larger than ending time" << std::endl;
+                cerr << "Error: Beginning time is larger than ending time" << endl;
             }else{
                 mapMean = statMean(lat, longitude,radius, timeD, timeF);
             }
-        } catch (const std::invalid_argument& e) {
-            std::cout << "Error: Unable to convert the first element to an integer." << std::endl;
+        } catch (const invalid_argument& e) {
+            cout << "Error: Unable to convert the first element to an integer." << endl;
         }
     } else {
-        std::cout << "Error: The list of arguments is incomplete." << std::endl;
+        cout << "Error: The list of arguments is incomplete." << endl;
     }
     View::displayStats(&mapMean);
 }
 
 void Controller::Test1_Scenario3() {
     cout << "Test 2 of scenario 3: Beginning time larger than ending time" << endl;
-    std::list<std::string> stringList {"44", "0", "5", "10/01/2019 12:00:00", "01/01/2019 12:00:00"};
+    list<string> stringList {"44", "0", "5", "10/01/2019 12:00:00", "01/01/2019 12:00:00"};
     Scenario3(&stringList);
 
 }
 
 void Controller::Test2_Scenario3() {
     cout << "Test 2 of scenario 3: No sensor associated with input" << endl;
-    std::list<std::string> stringList {"0", "0", "0", "01/01/2019 12:00:00", "10/01/2019 12:00:00"};
+    list<string> stringList {"0", "0", "0", "01/01/2019 12:00:00", "10/01/2019 12:00:00"};
     Scenario3(&stringList);
 }
