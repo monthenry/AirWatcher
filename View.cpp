@@ -38,7 +38,6 @@ void View::displayAccountCreationMenu() {
 
     
     cout << "Account created successfully!" << endl;
-    
 }
 
 bool View::displayLoginMenu() {
@@ -48,16 +47,14 @@ bool View::displayLoginMenu() {
     cout << "Please enter your password: ";
     getline(cin, password);
 
-    // Perform login authentication logic here
 
-    // ...
-
-    cout << "Login successful!" << endl;
+    cout << "Login successful! (Not implemented yet)" << endl;
     return true;
 }
 
 void View::displayActionMenu() {
     cout << "Here is the list of actions you can perform:" << endl;
+    cout << "0. Display all sensors" << endl;
     cout << "1. Manage users" << endl;
     cout << "2. Manage sensors" << endl;
     cout << "3. Retrieve account information" << endl;
@@ -67,6 +64,19 @@ void View::displayActionMenu() {
     cout << "7. Request sensors ranking in similarity to a specific sensor" << endl;
     cout << "8. Request statistics for a cleaner" << endl;
     cout << "9. Toggle performance metrics" << endl;
+}
+
+void View::displayAllSensors(map<string, Sensor*> sensors) {
+    cout << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "SENSOR LIST" << endl;
+    cout << "------------------------------------------" << endl;
+    for(auto it=sensors.begin(); it != sensors.end(); ++it) {
+        Sensor sensorToDisplay = *(it->second);
+        cout << sensorToDisplay.getSensorId() << endl;
+    }
+    cout << "------------------------------------------" << endl;
+    cout << endl;
 }
 
 list<string>* View::requestGlobalStatistics() {

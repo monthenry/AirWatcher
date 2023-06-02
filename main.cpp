@@ -36,11 +36,7 @@ int main(int argc, char* argv[]) {
     Controller c;
     c.initModel();
 
-    c.Test1_Scenario3();
-    c.Test2_Scenario3();
-    
-    list<string>* data = View::requestGlobalStatistics();
-    c.Scenario3(data);
+    c.initController();
 
     return 0;
 

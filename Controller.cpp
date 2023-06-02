@@ -1,4 +1,3 @@
-
 #include "Controller.h"
 
 Controller::Controller(){
@@ -47,50 +46,40 @@ void Controller::initController() {
 
         switch (userChoice)
         {
-            case 1:
-                /* Manage users (not implemented)*/
+            case 0: {
+                /* Display sensor list */
+                map<string, Sensor*> sensors = Sensor::getSensorMap();
+                View::displayAllSensors(sensors);
                 break;
+            }
 
-            case 2:
-                /* Manage sensors (not implemented)*/
-                break;
-
-            case 3:
-                /* Retrieve account information (not implemented)*/
-                break;
-
-            case 4:
-                /* Request sensor data analysis (not implemented)*/
-                break;
-
-            case 5:{
+            case 5: {
                 /* Request for global statistics in an area */
-                list<string>* userRequest = View::requestAreaStatistics();
+                Test1_Scenario3();
+                Test2_Scenario3();
+                
+                list<string>* data = View::requestGlobalStatistics();
+
+                Scenario3(data);
                 break;
     		}
-            case 6:
-                /* Request for air quality at a precise location (not implemented)*/
-                break;
 
-            case 7:
+            case 7: {
                 /* Request for sensor ranking in similarity to a specified sensor */
-                Sensor sensorToRank = Sensor::getSensorMap.find(View::getSensorID());
-                time_t start = convertDateTimeToTimeT();
-                time_t end = convertDateTimeToTimeT();
-                list<pair<string, int>>* rankedSensors = getSensorRanking(sensorToRank, start, end);
+                list<string>* userInput = View::requestSensorRanking();
+                map<string, Sensor*> sensors = Sensor::getSensorMap();
+                // cout << sensors.find(0) << endl;
+                // Sensor sensorToRank = NULL;
+                // time_t start = convertDateTimeToTimeT(userInput[1]);
+                // time_t end = convertDateTimeToTimeT(userInput[2]);
+                // list<pair<string, int>>* rankedSensors = getSensorRanking(sensorToRank, start, end);
                 break;
-
-            case 8:
-                /* Request statistics for a cleaner (not implemented)*/
-                break;
-
-            case 9:
-                /* Toggle performance metrics (not implemented)*/
-                break;
+            }
             
-            default:
+            default: {
                 View::displayNotImplementedError();
                 break;
+            }
         }
     }
     
@@ -143,8 +132,6 @@ time_t Controller::convertDateTimeToTimeT(const std::string& dateTimeString) {
 }
 
 map<string,tuple<int, int, int> > Controller::statMean(int x, int y,int d, time_t debut, time_t fin){
-
-    
     map<string, Sensor*> sensorMap = Sensor::getSensorMap();
     map<string, tuple<int,int,int> > mapMean;
     int cptO3=0,cptNO2=0,cptSO2=0, cptPM10=0;

@@ -11,6 +11,7 @@
 #include <functional>
 #include <ctime>
 #include <math.h>
+#include <map>
 
 #include "Attribute.h"
 #include "Sensor.h"
@@ -28,7 +29,6 @@ class Controller {
 
         void initController();
         void initModel();
-        Sensor* parseSensor(string s);
         map<string,tuple<int,int,int> > statMean(int x, int y,int d, time_t debut, time_t fin);
         list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
         time_t convertDateTimeToTimeT(const std::string& dateTimeString);

@@ -37,8 +37,6 @@ public:
 
     string getPassword ( ) const;
 
-    static User* parseUser(string ligne);
-
     static bool initUsers(string filename);
 
     static map<string, User*> getMapUsers();
@@ -61,7 +59,9 @@ public:
     // Contrat : 
     // 
 
+private:
 //------------------------------------------------------------------ PRIVE
+    static User* parseUser(string ligne);
 
 protected:
 //----------------------------------------------------- Méthodes protégées

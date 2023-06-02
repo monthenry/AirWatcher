@@ -6,6 +6,8 @@
 #include <list>
 #include <map>
 
+#include "Sensor.h"
+
 using namespace std; 
 
 class View {
@@ -17,9 +19,7 @@ public:
     static void displayAccountCreationMenu();
     static bool displayLoginMenu();
     static void displayActionMenu();
-
-    static list<std::string>* requestAreaStatistics();
-    static void displayAreaStatistics();
+    static void displayAllSensors(map<string, Sensor*> sensors);
 
     static list<string>* requestSensorRanking();
     static list<string>* requestGlobalStatistics();
