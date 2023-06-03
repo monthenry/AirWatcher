@@ -1,4 +1,6 @@
 #include "Controller.h"
+#include <stdexcept>
+#include <any>
 
 Controller::Controller(){
 }
@@ -88,30 +90,41 @@ void Controller::initController() {
 }
 
 list<pair<string, int>>* Controller::getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime) {
-    int mySensorAtmo = mySensor.getAtmoIndex(startTime, endTime);
+    try{
+        // invalid time range 
+        // Sensor* ptr = nullptr;
+        if(startTime <= endTime){
+                cout << "Sensor data empty or Invalid time range" << endl;
+                return NULL;
+        }
+            
+        int mySensorAtmo = mySensor.getAtmoIndex(startTime, endTime);
+        // Looping through the sensor map
+        map<string, Sensor*> sensors = Sensor::getSensorMap();
+        list<pair<string, int>>* rankedSensors = new list<pair<string, int>>(sensors.size());
+        int value;
 
-    // Looping through the sensor map
-    map<string, Sensor*> sensors = Sensor::getSensorMap();
-    list<pair<string, int>>* rankedSensors = new list<pair<string, int>>(sensors.size());
-    int value;
-
-    for (auto it = sensors.begin(); it != sensors.end(); ++it) {
-        Sensor theSensor = *(it->second);
-        int theSensorAtmo = theSensor.getAtmoIndex(startTime, endTime);
-        value = abs(mySensorAtmo - theSensorAtmo);
-        for (auto it2 = rankedSensors->begin(); it2 != rankedSensors->end(); ++it2) {
-            int currentSensorAtmo = it2->second;
-            if(abs(mySensorAtmo-currentSensorAtmo) > value){
-                pair<string, int> newSensor;
-                newSensor.first = theSensor.getSensorId();
-                newSensor.second = theSensorAtmo;
-                rankedSensors->insert(it2, newSensor);
-                break;
+        for (auto it = sensors.begin(); it != sensors.end(); ++it) {
+            Sensor theSensor = *(it->second);
+            int theSensorAtmo = theSensor.getAtmoIndex(startTime, endTime);
+            value = abs(mySensorAtmo - theSensorAtmo);
+            for (auto it2 = rankedSensors->begin(); it2 != rankedSensors->end(); ++it2) {
+                int currentSensorAtmo = it2->second;
+                if(abs(mySensorAtmo-currentSensorAtmo) > value){
+                    pair<string, int> newSensor;
+                    newSensor.first = theSensor.getSensorId();
+                    newSensor.second = theSensorAtmo;
+                    rankedSensors->insert(it2, newSensor);
+                    break;
+                }
             }
         }
-    }
 
-    return rankedSensors;
+        return rankedSensors;
+    } catch (const std::exception& e){
+        cout  << "Some Error occured while ranking similarity : " << e.what() << endl;
+        return NULL;
+    }
 }
 
 time_t Controller::convertDateTimeToTimeT(const std::string& dateTimeString) {
@@ -251,4 +264,43 @@ void Controller::Test2_Scenario3() {
     cout << "Test 2 of scenario 3: No sensor associated with input" << endl;
     std::list<std::string> stringList {"0", "0", "0", "01/01/2019 12:00:00", "10/01/2019 12:00:00"};
     Scenario3(&stringList);
+}
+// Similarity Ranking tests
+
+// TC_301
+void Controller::Test1_Scenario1(){
+    cout << "Test 1 of scenario 1: Supply list of sensors with mixed data" << endl;
+
+    // Create test data
+    std::time_t startTime = std::time(nullptr);
+    std::time_t endTime = std::time(nullptr);
+
+    // Create a list of sensor values
+    std::list<Sensor> sensorList;
+    sensorList.emplace_back("sensor1");
+    sensorList.emplace_back("sensor2");
+    sensorList.emplace_back("sensor3");
+
+    // Loop through the sensor list and test the getSensorRanking function
+    for (const auto& sensor : sensorList) {
+        // Call the function to get the sensor ranking
+        std::list<std::pair<std::string, int>>* result = getSensorRanking(sensor, startTime, endTime);
+
+        // Validate the result
+        if (result != nullptr) {
+            std::cout << "Sensor Ranking for " << sensor.getSensorId() << ":" << std::endl;
+            for (const auto& sensor : *result) {
+                std::cout << "Sensor ID: " << sensor.first << ", Atmo Index: " << sensor.second << std::endl;
+            }
+        } else {
+            std::cout << "Error: Failed to get the sensor ranking for " << sensor.getSensorId() << std::endl;
+        }
+
+        delete result;
+    }
+}
+// TC_302
+void Controller::Test2_Scenario1(){
+    cout << "Test 2 of scenario 1: Supply a sensor with invalid sensor data and time range" << endl;
+    getSensorRanking("sensor200", "10/01/2019 12:00:00", "10/01/2010 12:00:00")
 }

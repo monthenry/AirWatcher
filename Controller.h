@@ -36,5 +36,7 @@ class Controller {
         void Scenario3(list<string>* data);
         void Test1_Scenario3();
         void Test2_Scenario3();
+        void Test1_Scenario1();
+        void Test2_Scenario1();
 };
 #endif
