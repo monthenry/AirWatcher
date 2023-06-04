@@ -5,11 +5,18 @@ INPUT FUNCTION
 ----------------------------------------------------------------------------------------------------*/
 
 int View::getUserChoice() {
-    string choice;
+    int choice;
     cout << "Please enter your choice : ";
     cin >> choice;
+    
+    if(!cin) {
+        cin.clear();
+        cin.ignore(1024, '\n');
+        return 999;
+    }
+
     cin.ignore(); // Ignore the newline character in the input buffer
-    return atoi(choice);
+    return choice;
 }
 
 void View::getEnterToContinue() {
