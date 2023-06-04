@@ -1,7 +1,24 @@
 
 #include "Measurement.h"
-#include <iostream>
 
+/*----------------------------------------------------------------------------------------------------
+CONSTRUCTOR
+----------------------------------------------------------------------------------------------------*/
+
+Measurement::Measurement(){
+
+}
+
+Measurement::Measurement(time_t t, float val, Attribute* att, Sensor* s){
+    time = t;
+    value = val;
+    attribute = att;
+    sensor = s;
+}
+
+/*----------------------------------------------------------------------------------------------------
+GETTER
+----------------------------------------------------------------------------------------------------*/
 
 float Measurement::getValue(){
     return value;
@@ -19,11 +36,24 @@ Sensor* Measurement::getSensor(){
     return sensor;
 }
 
-Measurement::Measurement(time_t t, float val, Attribute* att, Sensor* s){
-    time = t;
-    value = val;
-    attribute = att;
-    sensor = s;
+/*----------------------------------------------------------------------------------------------------
+CORE FUNCTIONALITY
+----------------------------------------------------------------------------------------------------*/
+
+bool Measurement::initMeasurements(string filename) {
+    ifstream fichier(filename);
+    bool done = fichier.good();
+    string ligne;
+
+    if (done) {
+        while (getline(fichier, ligne)) {
+                
+            Measurement* msrm = parseMeasurement(ligne);
+            msrm->sensor->addMeasurement(msrm);
+        }
+    }
+
+    return done;
 }
 
 Measurement* Measurement::parseMeasurement(string line) {
@@ -47,20 +77,4 @@ Measurement* Measurement::parseMeasurement(string line) {
 
     Measurement* m = new Measurement(time, val, attr, sens);
     return m;
-}
-
-bool Measurement::initMeasurements(string filename) {
-    ifstream fichier(filename);
-    bool done = fichier.good();
-    string ligne;
-
-    if (done) {
-        while (getline(fichier, ligne)) {
-                
-            Measurement* msrm = parseMeasurement(ligne);
-            msrm->sensor->addMeasurement(msrm);
-        }
-    }
-
-    return done;
 }

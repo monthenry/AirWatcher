@@ -1,4 +1,4 @@
-#if ! defined ( Controller_H )
+#ifndef Controller_H
 #define Controller_H
 
 #include <string>
@@ -22,21 +22,36 @@
 #include "PrivateIndividual.h"
 
 using namespace std;
+using namespace std::chrono;
 
 class Controller {
-    public: 
+    public:
         Controller();
 
-        void initController();
+        // main process
+        void startController();
+
+    private:
+        // initialisation function
         void initModel();
-        map<string,tuple<int,int,int> > statMean(int x, int y,int d, time_t debut, time_t fin);
-        list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
+
+        // core functionality
+        map<string,tuple<int,int,int> > computeAreaStatistics(int x, int y,int d, time_t debut, time_t fin);
+        void runAreaStatistics(list<string>* input);
+        list<pair<string, int>>* computeSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
+        void runSensorRanking(list<string>* input);
+
+        // tools
         time_t convertDateTimeToTimeT(const std::string& dateTimeString);
 
-        void Scenario3(list<string>* data);
-        void Test1_Scenario3();
-        void Test2_Scenario3();
-        void Test1_Scenario1();
-        void Test2_Scenario1();
+        // Test function
+        double Test1_AreaStatistics();
+        double Test2_AreaStatistics();
+        double Test3_AreaStatistics();
+        double Test4_AreaStatistics();
+        double Test1_SensorRanking();
+        double Test2_SensorRanking();
+        double Test3_SensorRanking();
+        double Test4_SensorRanking();
 };
 #endif

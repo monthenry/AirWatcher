@@ -2,6 +2,8 @@
 #define MEASUREMENT_H
 
 #include <ctime> 
+#include <iostream>
+
 #include "Attribute.h"
 #include "Sensor.h"
 
@@ -11,7 +13,7 @@ using namespace std;
 class Sensor;
 class Measurement {
     public: 
-
+        Measurement();
         Measurement(time_t t, float val, Attribute* att, Sensor* s);
 
         time_t getTime();
