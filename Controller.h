@@ -26,14 +26,24 @@ using namespace std;
 class Controller {
     public: 
         Controller();
+        void startController();
 
-        void initController();
-        void initModel();
-        map<string,tuple<int,int,int> > statMean(int x, int y,int d, time_t debut, time_t fin);
-        list<pair<string, int>>* getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
+    private:
+        // tools
         time_t convertDateTimeToTimeT(const std::string& dateTimeString);
+        double measurePerformance(F&& func);
 
+        // initialisation function
+        void initModel();
+
+        // core functionality
+        map<string,tuple<int,int,int> > computeAreaStatistics(int x, int y,int d, time_t debut, time_t fin);
+        list<pair<string, int>>* computeSensorRanking(Sensor mySensor, time_t startTime, time_t endTime);
+        
+        // run functionality
         void Scenario3(list<string>* data);
+
+        // Test function
         void Test1_Scenario3();
         void Test2_Scenario3();
 };

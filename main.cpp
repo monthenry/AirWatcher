@@ -34,10 +34,7 @@ double measurePerformance(F&& func)
 
 int main(int argc, char* argv[]) {
     Controller c;
-    c.initModel();
-
-    c.initController();
+    c.startController();
 
     return 0;
-
 }

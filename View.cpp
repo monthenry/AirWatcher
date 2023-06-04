@@ -1,96 +1,71 @@
 #include "View.h"
 
+#ifdef _WIN32
+    #include <windows.h>
+    void View::clearScreen() {
+        system("cls");
+    }
+#elif __linux__ || __APPLE__
+    void View::clearScreen() {
+        system("clear");
+    }
+#endif
+
 int View::getUserChoice() {
     int choice;
-    cout << "Please enter your choice: ";
+    cout << "Please enter your choice : ";
     cin >> choice;
     cin.ignore(); // Ignore the newline character in the input buffer
     return choice;
 }
 
+void View::getEnterToContinue() {
+    displayTitleSeparator("Press Enter to continue...");
+    cin.ignore();
+    clearScreen();
+}
+
+void View::displayTitleSeparator(string title) {
+    cout << "--------------------------------------------------------------------" << endl;
+    cout << title << endl;
+    cout << "--------------------------------------------------------------------" << endl;
+}
+
+void View::displayEndSeparator() {
+    cout << "--------------------------------------------------------------------" << endl << endl;
+}
+
 void View::displayNotImplementedError() {
-    cout << "---------------------------" << endl;
-    cout << "Functionality not implemented yet" << endl;
-    cout << "---------------------------" << endl;
+    displayTitleSeparator("/!\\ Functionality not implemented yet /!\\");
     cout << endl;
 }
 
 void View::displayLogoutMessage() {
-    cout << "---------------------------" << endl;
-    cout << "Thanks for using AirWatcher ! " << endl;
-    cout << "---------------------------" << endl;
+    displayTitleSeparator("Thanks for using AirWatcher ! ");
     cout << endl;
 }
 
-void View::displayConnexionMenu() {
-    cout << "---------------------------" << endl;
-    cout << "Welcome to AirWatcher, select an action to perform" << endl;
-    cout << "---------------------------" << endl;
-    cout << "1. Create account" << endl;
-    cout << "2. Login" << endl;
-    cout << "3. Exit" << endl;
-    cout << endl;
-}
-
-void View::displayAccountCreationMenu() {
-    string username, password, confirmPassword;
-    cout << "Please enter your username: ";
-    getline(cin, username);
-    cout << "Please enter a password: ";
-    getline(cin, password);
-    cout << "Please confirm your password: ";
-    getline(cin, confirmPassword);
-
-    
-    cout << "Account created successfully!" << endl;
-    cout << endl;
-}
-
-bool View::displayLoginMenu() {
-    string username, password;
-    cout << "Please enter your username: ";
-    getline(cin, username);
-    cout << "Please enter your password: ";
-    getline(cin, password);
-
-
-    cout << "Login successful! (Not implemented yet)" << endl;
-    cout << endl;
-    return true;
-}
-
-void View::displayActionMenu() {
-    cout << endl;
-    cout << "---------------------------" << endl;
-    cout << "Here is the list of actions you can perform" << endl;
-    cout << "---------------------------" << endl;
+void View::displayFunctionalityList() {
+    displayTitleSeparator("FUNCTIONALITY LIST");
+    cout << "Choose the action to perform : " << endl;
     cout << "0. Display all sensors" << endl;
-    cout << "1. Manage users (not implemented)" << endl;
-    cout << "2. Manage sensors (not implemented)" << endl;
-    cout << "3. Retrieve account information (not implemented)" << endl;
-    cout << "4. Request sensor's data analysis (not implemented)" << endl;
-    cout << "5. Request global statistics in an area" << endl;
-    cout << "6. Request air quality at a precise location (not implemented)" << endl;
-    cout << "7. Request sensors ranking in similarity to a specific sensor" << endl;
-    cout << "8. Request statistics for a cleaner (not implemented)" << endl;
-    cout << "9. Toggle performance metrics (not implemented)" << endl;
-    cout << endl;
+    cout << "1. Request global statistics in an area" << endl;
+    cout << "2. Request sensors ranking in similarity to a specific sensor" << endl;
+    cout << "3. Test all functionality" << endl;
+    cout << "4. Exit AirWatcher" << endl;
+    displayEndSeparator();
 }
 
-void View::displayAllSensors(map<string, Sensor*> sensors) {
-    cout << endl;
-    cout << "------------------------------------------" << endl;
-    cout << "SENSOR LIST" << endl;
-    cout << "------------------------------------------" << endl;
+void View::displaySensorList(map<string, Sensor*> sensors) {
+    displayTitleSeparator("SENSOR LIST");
     for(auto it=sensors.begin(); it != sensors.end(); ++it) {
         Sensor sensorToDisplay = *(it->second);
         cout << sensorToDisplay.getSensorId() << endl;
     }
-    cout << "------------------------------------------" << endl;
-    cout << endl;
+    displayEndSeparator();
 }
 
-list<string>* View::requestGlobalStatistics() {
+list<string>* View::getAreaStatisticsInput() {
     list<string>* params = new list<string>();
     cout << "To request for global statistics in an area provide the location, radius, and period of interest." << endl;
 
@@ -119,12 +94,12 @@ list<string>* View::requestGlobalStatistics() {
     getline(cin, finish);
     params->push_back(finish);
 
-    cout << endl;
+    displayEndSeparator();
 
     return params;
 }
 
-list<string>* View::requestSensorRanking() {
+list<string>* View::getSensorRankingInput() {
     list<string>* params = new list<string>();
 
     cout << "Request sensors ranking in similarity to a specific sensor:";
@@ -142,27 +117,26 @@ list<string>* View::requestSensorRanking() {
     getline(cin, finish);
     params->push_back(finish);
 
-    cout << endl;
+    displayEndSeparator();
     
     return params;
 }
 
-void View::displayStats(std::map<std::string, std::tuple<int, int, int>>* mapMean) {
+void View::displayAreaStatistics(std::map<std::string, std::tuple<int, int, int>>* mapMean) {
+    displayTitleSeparator("STATISTICS IN THE SELECTED AREA AND TIMEFRAME");
     for (std::map<std::string, std::tuple<int, int, int>>::iterator it = mapMean->begin(); it != mapMean->end(); ++it) {
         std::cout << it->first << " : mean = " << std::get<0>(it->second) << "; max = " << std::get<1>(it->second) << "; min = " << std::get<2>(it->second) << std::endl;
     }
+    displayEndSeparator();
 }
 
 void View::displaySensorRanking(string sensorID, int atmoIndex, list<pair<string, int>>* sensorRanked) {
-    cout << endl;
-    cout << "------------------------------------------" << endl;
-    cout << "SENSOR SIMILAR TO " << sensorID << endl;
-    cout << "------------------------------------------" << endl;
+    string title = "SIMILARITY RANKING TO SENSOR : " + sensorID;
+    displayTitleSeparator(title);
     for(auto it=sensorRanked->begin(); it != sensorRanked->end(); ++it) {
         if(it->first != "") {
             cout << "Sensor ID : " << it->first << " | " << "Atmo index : " << it->second << " | " << "Delta : " << abs(atmoIndex - it->second) << endl;
         }
     }
-    cout << "------------------------------------------" << endl;
-    cout << endl;   
+    displayEndSeparator(); 
 }

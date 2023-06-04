@@ -9,63 +9,41 @@ void Controller::initModel() {
     Measurement::initMeasurements("./data/measurements.csv");
 }
 
-void Controller::initController() {
+void Controller::startController() {
+    View::clearScreen();
     initModel();
 
+    // Display functionality list and prompt user for choice
     int userChoice = -1;
-
-    while (userChoice == -1)
-    {
-        // Display connexion menu
-        View::displayConnexionMenu();
-        userChoice = View::getUserChoice();
-    }
-    
-    switch (userChoice)
-    {
-    case 1:
-        // display account creation menu (not implemented dummy interface)
-        View::displayAccountCreationMenu();
-        break;
-    case 2:
-        // display login menu (not implemented dummy interface)
-        View::displayLoginMenu();
-        break;
-    default:
-        return;
-        break;
-    }
-
-    // Display home menu (where user is presented with application function)
-    userChoice = -1;
-    while (userChoice == -1 || userChoice != 10)
+    while (userChoice == -1 || userChoice != 4)
     {
         // Display action menu
-        View::displayActionMenu();
+        View::clearScreen();
+        View::displayFunctionalityList();
         userChoice = View::getUserChoice();
+        View::clearScreen();
 
         switch (userChoice)
         {
             case 0: {
                 /* Display sensor list */
                 map<string, Sensor*> sensors = Sensor::getSensorMap();
-                View::displayAllSensors(sensors);
+                View::displaySensorList(sensors);
+                View::getEnterToContinue();
                 break;
             }
 
-            case 5: {
-                /* Request for global statistics in an area */
-                Test1_Scenario3();
-                Test2_Scenario3();
-                
-                list<string>* data = View::requestGlobalStatistics();
+            case 1: {
+                /* Request for global statistics in an area */                
+                list<string>* data = View::getAreaStatisticsInput();
                 Scenario3(data);
+                View::getEnterToContinue();
                 break;
     		}
 
-            case 7: {
+            case 2: {
                 /* Request for sensor ranking in similarity to a specified sensor */
-                list<string>* userInput = View::requestSensorRanking();
+                list<string>* userInput = View::getSensorRankingInput();
 
                 auto it = userInput->begin();
 
@@ -81,23 +59,38 @@ void Controller::initController() {
                 string endDate = *it;
                 time_t end = convertDateTimeToTimeT(endDate);
                 
-                list<pair<string, int>>* rankedSensors = getSensorRanking(targetSensor, start, end);
+                list<pair<string, int>>* rankedSensors = computeSensorRanking(targetSensor, start, end);
                 View::displaySensorRanking(sensorID, targetSensor.getAtmoIndex(start, end), rankedSensors);
+                View::getEnterToContinue();
+                break;
+            }
+
+            case 3: {
+                /* Launch tests */
+                Test1_Scenario3();
+                View::getEnterToContinue();
+                Test2_Scenario3();
+                View::getEnterToContinue();
+                break;
+            }
+
+            case 4: {
+                // Display a message on user exiting the application
+                View::displayLogoutMessage();
                 break;
             }
             
             default: {
+                // On wrong user input, display error and go back to menu
                 View::displayNotImplementedError();
+                View::getEnterToContinue();
                 break;
             }
         }
     }
-    
-    // Display a message on user exiting the application
-    View::displayLogoutMessage();
 }
 
-list<pair<string, int>>* Controller::getSensorRanking(Sensor mySensor, time_t startTime, time_t endTime) {
+list<pair<string, int>>* Controller::computeSensorRanking(Sensor mySensor, time_t startTime, time_t endTime) {
     int mySensorAtmo = mySensor.getAtmoIndex(startTime, endTime);
 
     // Looping through the sensor map
@@ -141,7 +134,7 @@ time_t Controller::convertDateTimeToTimeT(const string& dateTimeString) {
     return timeT;   
 }
 
-map<string,tuple<int, int, int> > Controller::statMean(int x, int y, int d, time_t debut, time_t fin){
+map<string,tuple<int, int, int> > Controller::computeAreaStatistics(int x, int y, int d, time_t debut, time_t fin){
     map<string, Sensor*> sensorMap = Sensor::getSensorMap();
     map<string, tuple<int,int,int> > mapMean;
     int cptO3=0,cptNO2=0,cptSO2=0, cptPM10=0;
@@ -230,16 +223,16 @@ void Controller::Scenario3(list<string>* data){
             advance(it, 1);
             int longitude = stoi(*it);
             advance(it, 1);
-            int radius = stoi(*it) ;
+            int radius = stoi(*it);
             advance(it, 1);
             time_t timeD = convertDateTimeToTimeT(*it);
             advance(it, 1);
             time_t timeF = convertDateTimeToTimeT(*it);
 
-            if(timeD>= timeF){
+            if(timeD >= timeF){
                 cerr << "Error: Beginning time is larger than ending time" << endl;
             }else{
-                mapMean = statMean(lat, longitude,radius, timeD, timeF);
+                mapMean = computeAreaStatistics(lat, longitude,radius, timeD, timeF);
             }
         } catch (const invalid_argument& e) {
             cout << "Error: Unable to convert the first element to an integer." << endl;
@@ -247,18 +240,19 @@ void Controller::Scenario3(list<string>* data){
     } else {
         cout << "Error: The list of arguments is incomplete." << endl;
     }
-    View::displayStats(&mapMean);
+    View::displayAreaStatistics(&mapMean);
 }
 
 void Controller::Test1_Scenario3() {
-    cout << "Test 2 of scenario 3: Beginning time larger than ending time" << endl;
+    View::displayTitleSeparator("Global statistics, Test 1 : Beginning time larger than ending time");
     list<string> stringList {"44", "0", "5", "10/01/2019 12:00:00", "01/01/2019 12:00:00"};
     Scenario3(&stringList);
-
+    View::displayEndSeparator();
 }
 
 void Controller::Test2_Scenario3() {
-    cout << "Test 2 of scenario 3: No sensor associated with input" << endl;
+    View::displayTitleSeparator("Global statistics, Test 2 : No sensor associated with input");
     list<string> stringList {"0", "0", "0", "01/01/2019 12:00:00", "10/01/2019 12:00:00"};
     Scenario3(&stringList);
+    View::displayEndSeparator();
 }
