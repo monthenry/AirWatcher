@@ -4,6 +4,14 @@
 
 map<string, Sensor*> Sensor::mapSensor ;
 
+/*----------------------------------------------------------------------------------------------------
+CONSTRUCTOR
+----------------------------------------------------------------------------------------------------*/
+
+Sensor::Sensor() {
+
+}
+
 Sensor::Sensor(string id, double lat, double lng, bool func) {
     sensorID = id;
     latitude = lat;
@@ -11,47 +19,72 @@ Sensor::Sensor(string id, double lat, double lng, bool func) {
     functionning = func;
 }
 
-Sensor::Sensor() {
-}
+/*----------------------------------------------------------------------------------------------------
+GETTER
+----------------------------------------------------------------------------------------------------*/
 
 string Sensor::getSensorId() {
     return sensorID;
-}
-
-double Sensor::getLongitude() {
-    return longitude;
-}
-
-void Sensor::setLongitude(double lng) {
-    longitude = lng;
 }
 
 double Sensor::getLatitude() {
     return latitude;
 }
 
-void Sensor::setLatitude(double lat) {
-    latitude = lat;
+double Sensor::getLongitude() {
+    return longitude;
 }
 
 bool Sensor::getFunctionning() {
     return functionning;
 }
 
-void Sensor::setFunctionning(bool func) {
-    functionning = func;
-}
-
 list<Measurement*> Sensor::getMeasurements() {
     return measurements;
 }
 
-void Sensor::addMeasurement(Measurement* m) {
-    measurements.push_back(m);
+map<string, Sensor*> Sensor::getSensorMap(){
+    return mapSensor;
+}
+
+/*----------------------------------------------------------------------------------------------------
+SETTER
+----------------------------------------------------------------------------------------------------*/
+
+void Sensor::setLatitude(double lat) {
+    latitude = lat;
+}
+
+void Sensor::setLongitude(double lng) {
+    longitude = lng;
+}
+
+void Sensor::setFunctionning(bool func) {
+    functionning = func;
 }
 
 void Sensor::setMeasurements(list<Measurement*> m) {
     measurements = m;
+}
+
+/*----------------------------------------------------------------------------------------------------
+CCORE FUNCTIONALITY
+----------------------------------------------------------------------------------------------------*/
+
+bool Sensor::initSensor(string filename) {
+    ifstream fichier(filename);
+    bool done = fichier.good();
+    string ligne;
+
+    if (done) {
+        while (getline(fichier, ligne)) {
+                
+            Sensor* sens = parseSensor(ligne);
+            mapSensor.insert(pair<string, Sensor*>(sens->getSensorId(), sens));
+        }
+    }
+
+    return done;
 }
 
 Sensor* Sensor::parseSensor(string line) {
@@ -70,24 +103,9 @@ Sensor* Sensor::parseSensor(string line) {
     Sensor* s = new Sensor(id, lat, longitude, true);
     return s;
 }
-map<string, Sensor*> Sensor::getSensorMap(){
-    return mapSensor;
-}
 
-bool Sensor::initSensor(string filename) {
-    ifstream fichier(filename);
-    bool done = fichier.good();
-    string ligne;
-
-    if (done) {
-        while (getline(fichier, ligne)) {
-                
-            Sensor* sens = parseSensor(ligne);
-            mapSensor.insert(pair<string, Sensor*>(sens->getSensorId(), sens));
-        }
-    }
-
-    return done;
+void Sensor::addMeasurement(Measurement* m) {
+    measurements.push_back(m);
 }
 
 int Sensor::getAtmoIndex(time_t start, time_t end) {
@@ -112,6 +130,26 @@ int Sensor::getAtmoIndex(time_t start, time_t end) {
             cptPM10++;
             sumPM10+=(*it)->getValue();
         }
+    }
+    
+    if(cptO3 == 0) {
+        cptO3 = 1;
+        sumO3 = -1;
+    }
+
+    if(cptNO2 == 0) {
+        cptNO2 = 1;
+        sumNO2 = -1;
+    }
+
+    if(cptSO2 == 0) {
+        cptSO2 = 1;
+        sumSO2 = -1;
+    }
+
+    if(cptPM10 == 0) {
+        cptPM10 = 1;
+        sumPM10 = -1;
     }
 
     int meanO3 = sumO3/cptO3, meanNO2 = sumNO2/cptNO2, meanSO2 = sumSO2/cptSO2, meanPM10 = sumPM10/cptPM10, atmoIndex = 0;
