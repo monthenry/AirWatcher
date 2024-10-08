@@ -7,7 +7,7 @@
 #include <list>
 #include <map>
 
-#include "Sensor.h"
+#include "../models/Sensor.h"
 
 using namespace std; 
 

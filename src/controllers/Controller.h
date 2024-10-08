@@ -13,13 +13,13 @@
 #include <math.h>
 #include <map>
 
-#include "Attribute.h"
-#include "Sensor.h"
-#include "Measurement.h"
-#include "View.h"
-#include "Sensor.h"
-#include "User.h"
-#include "PrivateIndividual.h"
+#include "./src/models/Attribute.h"
+#include "./src/models/Sensor.h"
+#include "./src/models/Measurement.h"
+#include "./src/models/Sensor.h"
+#include "./src/models/User.h"
+#include "./src/models/PrivateIndividual.h"
+#include "./src/views/View.h"
 
 using namespace std;
 using namespace std::chrono;
